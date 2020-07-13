@@ -128,7 +128,7 @@ RCT_EXPORT_METHOD(prepare:(nonnull NSNumber*)playerId
     switch ([category intValue]) {
         case 1:
         default:
-            avAudioSessionCategory = AVAudioSessionCategoryPlayback;
+            avAudioSessionCategory = AVAudioSessionCategoryPlayAndRecord;
             break;
         case 2:
             avAudioSessionCategory = AVAudioSessionCategoryAmbient;
