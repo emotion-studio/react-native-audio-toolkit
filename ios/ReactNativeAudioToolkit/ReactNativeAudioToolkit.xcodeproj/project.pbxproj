@@ -7,12 +7,130 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E05F28D1D3E538600A0D09A /* Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E05F28C1D3E538600A0D09A /* Helpers.m */; };
-		5E21FB521D3FBD0B00A922AE /* ReactPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E21FB511D3FBD0B00A922AE /* ReactPlayer.m */; };
-		5E21FB671D40CF5300A922AE /* ReactPlayerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E21FB661D40CF5300A922AE /* ReactPlayerItem.m */; };
-		5E8FD9931D269F9900CF68CC /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9901D269F9900CF68CC /* AudioPlayer.m */; };
-		5E8FD9941D269F9900CF68CC /* AudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9921D269F9900CF68CC /* AudioRecorder.m */; };
+		5E8FD9931D269F9900CF68CC /* AudioPlayerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */; };
+		5E8FD9941D269F9900CF68CC /* AudioRecorderBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */; };
+		8576667024D80F8E00363511 /* ReactPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576666F24D80F8E00363511 /* ReactPlayer.swift */; };
+		8576667224D812FD00363511 /* ReactPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667124D812FD00363511 /* ReactPlayerItem.swift */; };
+		8576667424D8155D00363511 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667324D8155D00363511 /* Helpers.swift */; };
+		8576667624D81A7A00363511 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667524D81A7A00363511 /* AudioRecorder.swift */; };
+		8576667824D8297200363511 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667724D8297200363511 /* AudioPlayer.swift */; };
+		857666AD24D86ADF00363511 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8576668E24D86A6300363511 /* libReact.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8576668D24D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
+			remoteInfo = React;
+		};
+		8576668F24D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28131D9B038B00D4039D;
+			remoteInfo = "React-tvOS";
+		};
+		8576669124D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3C059A1DE3340900C268FA;
+			remoteInfo = yoga;
+		};
+		8576669324D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3C06751DE3340C00C268FA;
+			remoteInfo = "yoga-tvOS";
+		};
+		8576669524D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3CD9251DE5FBEC00167DC4;
+			remoteInfo = cxxreact;
+		};
+		8576669724D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
+			remoteInfo = "cxxreact-tvOS";
+		};
+		8576669924D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BDC1FC498900052F4D5;
+			remoteInfo = jsinspector;
+		};
+		8576669B24D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
+			remoteInfo = "jsinspector-tvOS";
+		};
+		8576669D24D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
+			remoteInfo = "third-party";
+		};
+		8576669F24D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D3C1EBD27B6005632C8;
+			remoteInfo = "third-party-tvOS";
+		};
+		857666A124D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
+			remoteInfo = "double-conversion";
+		};
+		857666A324D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
+			remoteInfo = "double-conversion-tvOS";
+		};
+		857666A524D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EDEBC6D6214B3E7000DD5AC8;
+			remoteInfo = jsi;
+		};
+		857666A724D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EDEBC73B214B45A300DD5AC8;
+			remoteInfo = jsiexecutor;
+		};
+		857666A924D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED296FB6214C9A0900B7C4FE;
+			remoteInfo = "jsi-tvOS";
+		};
+		857666AB24D86A6300363511 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8576667A24D86A6300363511 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED296FEE214C9CF800B7C4FE;
+			remoteInfo = "jsiexecutor-tvOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		5E8FD9811D269F5D00CF68CC /* CopyFiles */ = {
@@ -27,17 +145,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5E05F28B1D3E538600A0D09A /* Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helpers.h; sourceTree = "<group>"; };
-		5E05F28C1D3E538600A0D09A /* Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helpers.m; sourceTree = "<group>"; };
-		5E21FB501D3FBD0B00A922AE /* ReactPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactPlayer.h; sourceTree = "<group>"; };
-		5E21FB511D3FBD0B00A922AE /* ReactPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactPlayer.m; sourceTree = "<group>"; };
-		5E21FB651D40CF5300A922AE /* ReactPlayerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactPlayerItem.h; sourceTree = "<group>"; };
-		5E21FB661D40CF5300A922AE /* ReactPlayerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactPlayerItem.m; sourceTree = "<group>"; };
 		5E8FD9831D269F5D00CF68CC /* libReactNativeAudioToolkit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeAudioToolkit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E8FD98F1D269F9900CF68CC /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
-		5E8FD9901D269F9900CF68CC /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
-		5E8FD9911D269F9900CF68CC /* AudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorder.h; sourceTree = "<group>"; };
-		5E8FD9921D269F9900CF68CC /* AudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorder.m; sourceTree = "<group>"; };
+		5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerBridge.m; sourceTree = "<group>"; };
+		5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorderBridge.m; sourceTree = "<group>"; };
+		8576666E24D80F8E00363511 /* ReactNativeAudioToolkit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeAudioToolkit-Bridging-Header.h"; sourceTree = "<group>"; };
+		8576666F24D80F8E00363511 /* ReactPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactPlayer.swift; sourceTree = "<group>"; };
+		8576667124D812FD00363511 /* ReactPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactPlayerItem.swift; sourceTree = "<group>"; };
+		8576667324D8155D00363511 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		8576667524D81A7A00363511 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		8576667724D8297200363511 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		8576667A24D86A6300363511 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				857666AD24D86ADF00363511 /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +174,7 @@
 			children = (
 				5E8FD9851D269F5D00CF68CC /* ReactNativeAudioToolkit */,
 				5E8FD9841D269F5D00CF68CC /* Products */,
+				8576667924D86A6300363511 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,18 +189,47 @@
 		5E8FD9851D269F5D00CF68CC /* ReactNativeAudioToolkit */ = {
 			isa = PBXGroup;
 			children = (
-				5E8FD98F1D269F9900CF68CC /* AudioPlayer.h */,
-				5E8FD9901D269F9900CF68CC /* AudioPlayer.m */,
-				5E8FD9911D269F9900CF68CC /* AudioRecorder.h */,
-				5E8FD9921D269F9900CF68CC /* AudioRecorder.m */,
-				5E05F28B1D3E538600A0D09A /* Helpers.h */,
-				5E05F28C1D3E538600A0D09A /* Helpers.m */,
-				5E21FB501D3FBD0B00A922AE /* ReactPlayer.h */,
-				5E21FB511D3FBD0B00A922AE /* ReactPlayer.m */,
-				5E21FB651D40CF5300A922AE /* ReactPlayerItem.h */,
-				5E21FB661D40CF5300A922AE /* ReactPlayerItem.m */,
+				5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */,
+				5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */,
+				8576667524D81A7A00363511 /* AudioRecorder.swift */,
+				8576667724D8297200363511 /* AudioPlayer.swift */,
+				8576667324D8155D00363511 /* Helpers.swift */,
+				8576666F24D80F8E00363511 /* ReactPlayer.swift */,
+				8576667124D812FD00363511 /* ReactPlayerItem.swift */,
+				8576666E24D80F8E00363511 /* ReactNativeAudioToolkit-Bridging-Header.h */,
 			);
 			path = ReactNativeAudioToolkit;
+			sourceTree = "<group>";
+		};
+		8576667924D86A6300363511 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8576667A24D86A6300363511 /* React.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8576667B24D86A6300363511 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8576668E24D86A6300363511 /* libReact.a */,
+				8576669024D86A6300363511 /* libReact.a */,
+				8576669224D86A6300363511 /* libyoga.a */,
+				8576669424D86A6300363511 /* libyoga.a */,
+				8576669624D86A6300363511 /* libcxxreact.a */,
+				8576669824D86A6300363511 /* libcxxreact.a */,
+				8576669A24D86A6300363511 /* libjsinspector.a */,
+				8576669C24D86A6300363511 /* libjsinspector-tvOS.a */,
+				8576669E24D86A6300363511 /* libthird-party.a */,
+				857666A024D86A6300363511 /* libthird-party.a */,
+				857666A224D86A6300363511 /* libdouble-conversion.a */,
+				857666A424D86A6300363511 /* libdouble-conversion.a */,
+				857666A624D86A6300363511 /* libjsi.a */,
+				857666A824D86A6300363511 /* libjsiexecutor.a */,
+				857666AA24D86A6300363511 /* libjsi-tvOS.a */,
+				857666AC24D86A6300363511 /* libjsiexecutor-tvOS.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -115,6 +263,7 @@
 				TargetAttributes = {
 					5E8FD9821D269F5D00CF68CC = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 1160;
 					};
 				};
 			};
@@ -123,11 +272,18 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 5E8FD97A1D269F5D00CF68CC;
 			productRefGroup = 5E8FD9841D269F5D00CF68CC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8576667B24D86A6300363511 /* Products */;
+					ProjectRef = 8576667A24D86A6300363511 /* React.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				5E8FD9821D269F5D00CF68CC /* ReactNativeAudioToolkit */,
@@ -135,16 +291,133 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		8576668E24D86A6300363511 /* libReact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReact.a;
+			remoteRef = 8576668D24D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669024D86A6300363511 /* libReact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReact.a;
+			remoteRef = 8576668F24D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669224D86A6300363511 /* libyoga.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyoga.a;
+			remoteRef = 8576669124D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669424D86A6300363511 /* libyoga.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyoga.a;
+			remoteRef = 8576669324D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669624D86A6300363511 /* libcxxreact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcxxreact.a;
+			remoteRef = 8576669524D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669824D86A6300363511 /* libcxxreact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcxxreact.a;
+			remoteRef = 8576669724D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669A24D86A6300363511 /* libjsinspector.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsinspector.a;
+			remoteRef = 8576669924D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669C24D86A6300363511 /* libjsinspector-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsinspector-tvOS.a";
+			remoteRef = 8576669B24D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8576669E24D86A6300363511 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 8576669D24D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		857666A024D86A6300363511 /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 8576669F24D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		857666A224D86A6300363511 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 857666A124D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		857666A424D86A6300363511 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 857666A324D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		857666A624D86A6300363511 /* libjsi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsi.a;
+			remoteRef = 857666A524D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		857666A824D86A6300363511 /* libjsiexecutor.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsiexecutor.a;
+			remoteRef = 857666A724D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		857666AA24D86A6300363511 /* libjsi-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsi-tvOS.a";
+			remoteRef = 857666A924D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		857666AC24D86A6300363511 /* libjsiexecutor-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsiexecutor-tvOS.a";
+			remoteRef = 857666AB24D86A6300363511 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5E8FD97F1D269F5D00CF68CC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E21FB521D3FBD0B00A922AE /* ReactPlayer.m in Sources */,
-				5E21FB671D40CF5300A922AE /* ReactPlayerItem.m in Sources */,
-				5E05F28D1D3E538600A0D09A /* Helpers.m in Sources */,
-				5E8FD9931D269F9900CF68CC /* AudioPlayer.m in Sources */,
-				5E8FD9941D269F9900CF68CC /* AudioRecorder.m in Sources */,
+				8576667624D81A7A00363511 /* AudioRecorder.swift in Sources */,
+				8576667424D8155D00363511 /* Helpers.swift in Sources */,
+				5E8FD9931D269F9900CF68CC /* AudioPlayerBridge.m in Sources */,
+				8576667224D812FD00363511 /* ReactPlayerItem.swift in Sources */,
+				8576667824D8297200363511 /* AudioPlayer.swift in Sources */,
+				8576667024D80F8E00363511 /* ReactPlayer.swift in Sources */,
+				5E8FD9941D269F9900CF68CC /* AudioRecorderBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,16 +512,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../node_modules/react-native/React/**",
 					"$(SRCROOT)/../../../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../react-native/**",
 				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeAudioToolkit/ReactNativeAudioToolkit-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -256,16 +535,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_MODULES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../**",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../node_modules/react-native/React/**",
 					"$(SRCROOT)/../../../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../react-native/**",
 				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ReactNativeAudioToolkit/ReactNativeAudioToolkit-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
