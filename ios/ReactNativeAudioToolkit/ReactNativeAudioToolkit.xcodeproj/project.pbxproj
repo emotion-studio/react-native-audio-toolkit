@@ -14,7 +14,7 @@
 		8576667624D81A7A00363511 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667524D81A7A00363511 /* AudioRecorder.swift */; };
 		8576667824D8297200363511 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667724D8297200363511 /* AudioPlayer.swift */; };
 		857666AD24D86ADF00363511 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8576668E24D86A6300363511 /* libReact.a */; };
-		857666AF24D9AED400363511 /* AudioPlayerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */; };
+		857666AF24D9AED400363511 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9901D269F9900CF68CC /* AudioPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,7 +146,7 @@
 
 /* Begin PBXFileReference section */
 		5E8FD9831D269F5D00CF68CC /* libReactNativeAudioToolkit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeAudioToolkit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerBridge.m; sourceTree = "<group>"; };
+		5E8FD9901D269F9900CF68CC /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
 		5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorderBridge.m; sourceTree = "<group>"; };
 		8576666E24D80F8E00363511 /* ReactNativeAudioToolkit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeAudioToolkit-Bridging-Header.h"; sourceTree = "<group>"; };
 		8576666F24D80F8E00363511 /* ReactPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactPlayer.swift; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		5E8FD9851D269F5D00CF68CC /* ReactNativeAudioToolkit */ = {
 			isa = PBXGroup;
 			children = (
-				5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */,
+				5E8FD9901D269F9900CF68CC /* AudioPlayer.m */,
 				5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */,
 				8576667524D81A7A00363511 /* AudioRecorder.swift */,
 				8576667724D8297200363511 /* AudioPlayer.swift */,
@@ -417,7 +417,7 @@
 				8576667824D8297200363511 /* AudioPlayer.swift in Sources */,
 				8576667024D80F8E00363511 /* ReactPlayer.swift in Sources */,
 				5E8FD9941D269F9900CF68CC /* AudioRecorderBridge.m in Sources */,
-				857666AF24D9AED400363511 /* AudioPlayerBridge.m in Sources */,
+				857666AF24D9AED400363511 /* AudioPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
