@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E8FD9941D269F9900CF68CC /* AudioRecorderBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */; };
+		5E8FD9941D269F9900CF68CC /* AudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9921D269F9900CF68CC /* AudioRecorder.m */; };
 		8576667024D80F8E00363511 /* ReactPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576666F24D80F8E00363511 /* ReactPlayer.swift */; };
 		8576667224D812FD00363511 /* ReactPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667124D812FD00363511 /* ReactPlayerItem.swift */; };
 		8576667424D8155D00363511 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667324D8155D00363511 /* Helpers.swift */; };
@@ -147,7 +147,7 @@
 /* Begin PBXFileReference section */
 		5E8FD9831D269F5D00CF68CC /* libReactNativeAudioToolkit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeAudioToolkit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E8FD9901D269F9900CF68CC /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
-		5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorderBridge.m; sourceTree = "<group>"; };
+		5E8FD9921D269F9900CF68CC /* AudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorder.m; sourceTree = "<group>"; };
 		8576666E24D80F8E00363511 /* ReactNativeAudioToolkit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNativeAudioToolkit-Bridging-Header.h"; sourceTree = "<group>"; };
 		8576666F24D80F8E00363511 /* ReactPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactPlayer.swift; sourceTree = "<group>"; };
 		8576667124D812FD00363511 /* ReactPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactPlayerItem.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				5E8FD9901D269F9900CF68CC /* AudioPlayer.m */,
-				5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */,
+				5E8FD9921D269F9900CF68CC /* AudioRecorder.m */,
 				8576667524D81A7A00363511 /* AudioRecorder.swift */,
 				8576667724D8297200363511 /* AudioPlayer.swift */,
 				8576667324D8155D00363511 /* Helpers.swift */,
@@ -416,7 +416,7 @@
 				8576667224D812FD00363511 /* ReactPlayerItem.swift in Sources */,
 				8576667824D8297200363511 /* AudioPlayer.swift in Sources */,
 				8576667024D80F8E00363511 /* ReactPlayer.swift in Sources */,
-				5E8FD9941D269F9900CF68CC /* AudioRecorderBridge.m in Sources */,
+				5E8FD9941D269F9900CF68CC /* AudioRecorder.m in Sources */,
 				857666AF24D9AED400363511 /* AudioPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
