@@ -81,9 +81,9 @@ class AudioPlayer : NSObject {
         }
     }
     
-    @objc(test:)
-    func test(_ callback: RCTResponseSenderBlock) {
-        callback(["Hello from Swift!"])
+    @objc
+    func test(_ data: String) {
+        print(data)
     }
 
     @objc(prepare:withPath:withOptions:withCallback:)

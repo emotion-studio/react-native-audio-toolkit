@@ -35,6 +35,6 @@ RCT_EXTERN_METHOD(resume:(nonnull NSNumber*)playerId
 RCT_EXTERN_METHOD(getCurrentTime:(nonnull NSNumber*)playerId
                   withCallback:(RCTResponseSenderBlock)callback)
 
-RCT_EXTERN_METHOD(test: (RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(test:(nonnull NSString*)data)
 
 @end
