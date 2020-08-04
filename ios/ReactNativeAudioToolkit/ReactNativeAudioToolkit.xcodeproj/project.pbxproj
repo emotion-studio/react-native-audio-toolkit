@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E8FD9931D269F9900CF68CC /* AudioPlayerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */; };
 		5E8FD9941D269F9900CF68CC /* AudioRecorderBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9921D269F9900CF68CC /* AudioRecorderBridge.m */; };
 		8576667024D80F8E00363511 /* ReactPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576666F24D80F8E00363511 /* ReactPlayer.swift */; };
 		8576667224D812FD00363511 /* ReactPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667124D812FD00363511 /* ReactPlayerItem.swift */; };
@@ -15,6 +14,7 @@
 		8576667624D81A7A00363511 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667524D81A7A00363511 /* AudioRecorder.swift */; };
 		8576667824D8297200363511 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576667724D8297200363511 /* AudioPlayer.swift */; };
 		857666AD24D86ADF00363511 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8576668E24D86A6300363511 /* libReact.a */; };
+		857666AF24D9AED400363511 /* AudioPlayerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8FD9901D269F9900CF68CC /* AudioPlayerBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -413,11 +413,11 @@
 			files = (
 				8576667624D81A7A00363511 /* AudioRecorder.swift in Sources */,
 				8576667424D8155D00363511 /* Helpers.swift in Sources */,
-				5E8FD9931D269F9900CF68CC /* AudioPlayerBridge.m in Sources */,
 				8576667224D812FD00363511 /* ReactPlayerItem.swift in Sources */,
 				8576667824D8297200363511 /* AudioPlayer.swift in Sources */,
 				8576667024D80F8E00363511 /* ReactPlayer.swift in Sources */,
 				5E8FD9941D269F9900CF68CC /* AudioRecorderBridge.m in Sources */,
+				857666AF24D9AED400363511 /* AudioPlayerBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

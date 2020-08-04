@@ -81,9 +81,9 @@ class AudioPlayer : NSObject {
         }
     }
     
-    @objc(test:)
-    func test(_ data: String) {
-        print(data)
+    @objc(test)
+    func test() {
+        print("Hello from Swift!")
     }
 
     @objc(prepare:withPath:withOptions:withCallback:)
