@@ -10,7 +10,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
     }
     
     @objc
-    func prepare(recorderId: Int,
+    func prepare(_ recorderId: Int,
                  withPath filename: String,
                  withOptions options: [String: Any],
                  withCallback callback: RCTResponseSenderBlock) -> Void {
@@ -66,7 +66,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
     }
     
     @objc
-    func record(recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func record(_ recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let recorder = self.recorderPool[recorderId] else {
             callback(Helpers.errObj(withCode: "notfound", withMessage: "Recorder with that id was not found"))
             return
@@ -81,7 +81,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
     }
     
     @objc
-    func stop(recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func stop(_ recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let recorder = self.recorderPool[recorderId] else {
             callback(Helpers.errObj(withCode: "notfound", withMessage: "Recorder with that id was not found"))
             return
@@ -92,7 +92,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
     }
     
     @objc
-    func pause(recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func pause(_ recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let recorder = self.recorderPool[recorderId] else {
             callback(Helpers.errObj(withCode: "notfound", withMessage: "Recorder with that id was not found"))
             return
@@ -103,7 +103,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
     }
     
     @objc
-    func destroy(recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func destroy(_ recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
         self.destroyRecorder(withId: recorderId)
         callback(nil)
     }

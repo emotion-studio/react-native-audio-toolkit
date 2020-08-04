@@ -39,38 +39,6 @@ class AudioPlayer : NSObject {
         return URL(fileURLWithPath: path);
     }
     
-    @objc
-    func seek(playerId: Int,
-              withPosition position: Int,
-              withCallback callback: @escaping RCTResponseSenderBlock) {
-        if let player = self.playerPool[playerId] as? ReactPlayer,
-            let currentItem = player.currentItem {
-            player.cancelPendingPrerolls()
-            if position >= 0 {
-                print(position)
-                if (position == 0) {
-                    currentItem.seek(to: CMTime.zero, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero) { _ in
-                        callback([[
-                            "duration": currentItem.asset.duration.seconds * 1000,
-                            "position": player.currentTime().seconds * 1000,
-                        ]])
-                    }
-                } else {
-                    let time = CMTime(seconds: Double(position)/1000.0, preferredTimescale: 60000)
-                    currentItem.seek(to: time) { _ in
-                        callback([[
-                            "duration": currentItem.asset.duration.seconds * 1000,
-                            "position": player.currentTime().seconds * 1000,
-                        ]])
-                    }
-                }
-            }
-        } else {
-            callback(Helpers.errObj(withCode: "notfound", withMessage: "playerId \(playerId) not found."))
-            return
-        }
-    }
-    
     private func destroyPlayer(withId playerId: Int) {
         if let player = self.playerPool[playerId] as? ReactPlayer {
             player.pause()
@@ -91,7 +59,7 @@ class AudioPlayer : NSObject {
         if player.autoDestroy {
             self.destroyPlayer(withId: playerId)
         } else {
-            self.seek(playerId: playerId, withPosition: 0, withCallback: {_ in return})
+            self.seek(playerId, withPosition: 0, withCallback: {_ in return})
         }
         
         if player.looping {
@@ -113,7 +81,7 @@ class AudioPlayer : NSObject {
         }
     }
 
-    func prepare(playerId: Int,
+    func prepare(_ playerId: Int,
                  withPath path: String,
                  withOptions options: [String: Any],
                  withCallback callback: RCTResponseSenderBlock) {
@@ -226,13 +194,13 @@ class AudioPlayer : NSObject {
     }
     
     @objc
-    func destroy(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func destroy(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         self.destroyPlayer(withId: playerId)
         callback(nil)
     }
     
     @objc
-    func play(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func play(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let player = self.playerPool[playerId] as? ReactPlayer,
             let currentItem = player.currentItem else {
             callback(Helpers.errObj(withCode: "notfound",
@@ -249,7 +217,40 @@ class AudioPlayer : NSObject {
     }
     
     @objc
-    func set(playerId: Int, withOptions options: [String: Any], withCallback callback: RCTResponseSenderBlock) {
+    func seek(_ playerId: Int,
+              withPosition position: Int,
+              withCallback callback: @escaping RCTResponseSenderBlock) {
+        if let player = self.playerPool[playerId] as? ReactPlayer,
+            let currentItem = player.currentItem {
+            player.cancelPendingPrerolls()
+            if position >= 0 {
+                print(position)
+                if (position == 0) {
+                    currentItem.seek(to: CMTime.zero, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero) { _ in
+                        callback([[
+                            "duration": currentItem.asset.duration.seconds * 1000,
+                            "position": player.currentTime().seconds * 1000,
+                        ]])
+                    }
+                } else {
+                    let time = CMTime(seconds: Double(position)/1000.0, preferredTimescale: 60000)
+                    currentItem.seek(to: time) { _ in
+                        callback([[
+                            "duration": currentItem.asset.duration.seconds * 1000,
+                            "position": player.currentTime().seconds * 1000,
+                        ]])
+                    }
+                }
+            }
+        } else {
+            callback(Helpers.errObj(withCode: "notfound", withMessage: "playerId \(playerId) not found."))
+            return
+        }
+    }
+    
+    
+    @objc
+    func set(_ playerId: Int, withOptions options: [String: Any], withCallback callback: RCTResponseSenderBlock) {
         guard let player = self.playerPool[playerId] as? ReactPlayer else {
             callback(Helpers.errObj(withCode: "notfound",
                                     withMessage: "playerId \(playerId) not found."))
@@ -275,7 +276,7 @@ class AudioPlayer : NSObject {
     }
     
     @objc
-    func stop(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func stop(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let player = self.playerPool[playerId] as? ReactPlayer,
             let currentItem = player.currentItem else {
             callback(Helpers.errObj(withCode: "notfound",
@@ -296,7 +297,7 @@ class AudioPlayer : NSObject {
     }
     
     @objc
-    func pause(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func pause(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let player = self.playerPool[playerId] as? ReactPlayer,
             let currentItem = player.currentItem else {
             callback(Helpers.errObj(withCode: "notfound",
@@ -313,7 +314,7 @@ class AudioPlayer : NSObject {
     }
     
     @objc
-    func resume(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func resume(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let player = self.playerPool[playerId] as? ReactPlayer,
             let currentItem = player.currentItem else {
             callback(Helpers.errObj(withCode: "notfound",
@@ -330,7 +331,7 @@ class AudioPlayer : NSObject {
     }
     
     @objc
-    func getCurrentTime(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+    func getCurrentTime(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let player = self.playerPool[playerId] as? ReactPlayer,
             let currentItem = player.currentItem else {
             callback(Helpers.errObj(withCode: "notfound",
