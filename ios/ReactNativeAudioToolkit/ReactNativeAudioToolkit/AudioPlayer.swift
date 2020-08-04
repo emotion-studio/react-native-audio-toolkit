@@ -190,7 +190,7 @@ class AudioPlayer : NSObject {
             if #available(iOS 10.0, *) {
                 player.automaticallyWaitsToMinimizeStalling = false
             }
-            callback(nil)
+            callback([NSNull()])
         } else {
             if player.autoDestroy {
                 self.destroyPlayer(withId: playerId)
@@ -202,7 +202,7 @@ class AudioPlayer : NSObject {
     @objc
     func destroy(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         self.destroyPlayer(withId: playerId)
-        callback(nil)
+        callback([NSNull()])
     }
     
     @objc
@@ -216,7 +216,7 @@ class AudioPlayer : NSObject {
         player.play()
         player.rate = player.speed
         
-        callback([[
+        callback([NSNull(), [
             "duration": currentItem.asset.duration.seconds * 1000,
             "position": player.currentTime().seconds * 1000,
         ]])
@@ -233,7 +233,7 @@ class AudioPlayer : NSObject {
                 print(position)
                 if (position == 0) {
                     currentItem.seek(to: CMTime.zero, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero) { _ in
-                        callback([[
+                        callback([NSNull(), [
                             "duration": currentItem.asset.duration.seconds * 1000,
                             "position": player.currentTime().seconds * 1000,
                         ]])
@@ -241,7 +241,7 @@ class AudioPlayer : NSObject {
                 } else {
                     let time = CMTime(seconds: Double(position)/1000.0, preferredTimescale: 60000)
                     currentItem.seek(to: time) { _ in
-                        callback([[
+                        callback([NSNull(), [
                             "duration": currentItem.asset.duration.seconds * 1000,
                             "position": player.currentTime().seconds * 1000,
                         ]])
@@ -278,7 +278,7 @@ class AudioPlayer : NSObject {
             }
         }
         
-        callback(nil)
+        callback([NSNull()])
     }
     
     @objc
@@ -296,7 +296,7 @@ class AudioPlayer : NSObject {
             player.currentItem?.seek(to: CMTime.zero)
         }
         
-        callback([[
+        callback([NSNull(), [
             "duration": currentItem.asset.duration.seconds * 1000,
             "position": player.currentTime().seconds * 1000,
         ]])
@@ -313,7 +313,7 @@ class AudioPlayer : NSObject {
 
         player.pause()
 
-        callback([[
+        callback([NSNull(), [
             "duration": currentItem.asset.duration.seconds * 1000,
             "position": player.currentTime().seconds * 1000,
         ]])
@@ -330,7 +330,7 @@ class AudioPlayer : NSObject {
         player.play()
         player.rate = player.speed
         
-        callback([[
+        callback([NSNull(), [
             "duration": currentItem.asset.duration.seconds * 1000,
             "position": player.currentTime().seconds * 1000,
         ]])
@@ -345,7 +345,7 @@ class AudioPlayer : NSObject {
             return
         }
         
-        callback([[
+        callback([NSNull(), [
             "duration": currentItem.asset.duration.seconds * 1000,
             "position": player.currentTime().seconds * 1000,
         ]])
