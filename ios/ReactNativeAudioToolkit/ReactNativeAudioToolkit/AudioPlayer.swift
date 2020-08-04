@@ -81,7 +81,7 @@ class AudioPlayer : NSObject {
         }
     }
     
-    @objc
+    @objc(test:)
     func test(_ data: String) {
         print(data)
     }
