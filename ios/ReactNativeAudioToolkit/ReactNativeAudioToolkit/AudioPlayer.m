@@ -14,7 +14,7 @@ RCT_EXTERN_METHOD(seek:(nonnull NSNumber*)playerId
                   withCallback:(RCTResponseSenderBlock)callback)
 
 RCT_EXTERN_METHOD(set:(nonnull NSNumber*)playerId
-                  withOpts:(NSDictionary*)options
+                  withOptions:(NSDictionary*)options
                   withCallback:(RCTResponseSenderBlock)callback)
 
 RCT_EXTERN_METHOD(destroy:(nonnull NSNumber*)playerId
