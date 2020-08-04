@@ -12,12 +12,4 @@ class ReactPlayer: AVPlayer {
     var looping = false
     var autoDestroy = true
     var speed = Float(1.0)
-    
-    init(withUrl url: URL) {
-        super.init(url: url)
-    }
-    
-    override init(playerItem item: AVPlayerItem?) {
-        super.init(playerItem: item)
-    }
 }
