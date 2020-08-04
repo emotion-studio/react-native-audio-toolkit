@@ -84,7 +84,7 @@ class AudioPlayer : NSObject {
     @objc(prepare:withPath:withOptions:withCallback:)
     func prepare(_ playerId: Int,
                  withPath path: String,
-                 withOptions options: [String: Any],
+                 withOptions options: NSDictionary,
                  withCallback callback: RCTResponseSenderBlock) {
         
         if path.count == 0 {
