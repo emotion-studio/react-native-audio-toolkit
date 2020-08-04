@@ -139,7 +139,7 @@ class AudioPlayer : NSObject {
                          name: Notification.Name.AVPlayerItemDidPlayToEndTime,
                          object: item)
         
-        var avAudioSessionCategory: AVAudioSession.Category
+        var avAudioSessionCategory: AVAudioSession.Category = .playAndRecord
         if let category = options["category"] as? Int {
             switch(category) {
             case 2:
@@ -241,6 +241,102 @@ class AudioPlayer : NSObject {
         }
         player.play()
         player.rate = player.speed
+        
+        callback([[
+            "duration": currentItem.asset.duration.seconds * 1000,
+            "position": player.currentTime().seconds * 1000,
+        ]])
+    }
+    
+    @objc
+    func set(playerId: Int, withOptions options: [String: Any], withCallback callback: RCTResponseSenderBlock) {
+        guard let player = self.playerPool[playerId] as? ReactPlayer else {
+            callback(Helpers.errObj(withCode: "notfound",
+                                    withMessage: "playerId \(playerId) not found."))
+            return
+        }
+        
+        if let volume = options["volume"] as? Float {
+            player.volume = volume
+        }
+        
+        if let looping = options["looping"] as? Bool {
+            player.looping = looping
+        }
+        
+        if let speed = options["speed"] as? Float {
+            player.speed = speed
+            if player.rate != 0.0 {
+                player.rate = player.speed
+            }
+        }
+        
+        callback(nil)
+    }
+    
+    @objc
+    func stop(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+        guard let player = self.playerPool[playerId] as? ReactPlayer,
+            let currentItem = player.currentItem else {
+            callback(Helpers.errObj(withCode: "notfound",
+                                    withMessage: "playerId \(playerId) not found."))
+            return
+        }
+        player.pause()
+        if player.autoDestroy {
+            self.destroyPlayer(withId: playerId)
+        } else {
+            player.currentItem?.seek(to: CMTime.zero)
+        }
+        
+        callback([[
+            "duration": currentItem.asset.duration.seconds * 1000,
+            "position": player.currentTime().seconds * 1000,
+        ]])
+    }
+    
+    @objc
+    func pause(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+        guard let player = self.playerPool[playerId] as? ReactPlayer,
+            let currentItem = player.currentItem else {
+            callback(Helpers.errObj(withCode: "notfound",
+                                    withMessage: "playerId \(playerId) not found."))
+            return
+        }
+
+        player.pause()
+
+        callback([[
+            "duration": currentItem.asset.duration.seconds * 1000,
+            "position": player.currentTime().seconds * 1000,
+        ]])
+    }
+    
+    @objc
+    func resume(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+        guard let player = self.playerPool[playerId] as? ReactPlayer,
+            let currentItem = player.currentItem else {
+            callback(Helpers.errObj(withCode: "notfound",
+                                    withMessage: "playerId \(playerId) not found."))
+            return
+        }
+        player.play()
+        player.rate = player.speed
+        
+        callback([[
+            "duration": currentItem.asset.duration.seconds * 1000,
+            "position": player.currentTime().seconds * 1000,
+        ]])
+    }
+    
+    @objc
+    func getCurrentTime(playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+        guard let player = self.playerPool[playerId] as? ReactPlayer,
+            let currentItem = player.currentItem else {
+            callback(Helpers.errObj(withCode: "notfound",
+                                    withMessage: "playerId \(playerId) not found."))
+            return
+        }
         
         callback([[
             "duration": currentItem.asset.duration.seconds * 1000,

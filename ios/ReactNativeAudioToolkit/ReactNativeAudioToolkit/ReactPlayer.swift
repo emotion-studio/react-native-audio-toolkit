@@ -9,18 +9,15 @@
 import AVFoundation
 
 class ReactPlayer: AVPlayer {
-    var looping: Bool
-    var autoDestroy: Bool
-    var speed: Float
+    var looping = false
+    var autoDestroy = true
+    var speed = Float(1.0)
     
     init(withUrl url: URL) {
-        self.autoDestroy = true
-        self.looping = false
-        self.speed = 1.0
         super.init(url: url)
     }
     
-    init(playerItem item: AVPlayerItem?) {
+    override init(playerItem item: AVPlayerItem?) {
         super.init(playerItem: item)
     }
 }
