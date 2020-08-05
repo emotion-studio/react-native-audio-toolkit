@@ -31,10 +31,24 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
         }
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [
-                .defaultToSpeaker,
+            let categoryOptions: AVAudioSession.CategoryOptions = [
+                .duckOthers,
                 .allowBluetooth,
-            ])
+                .defaultToSpeaker,
+            ]
+            if #available(iOS 10.0, *) {
+                try AVAudioSession
+                    .sharedInstance()
+                    .setCategory(
+                        .playAndRecord,
+                        mode: .voiceChat,
+                        options: categoryOptions)
+            } else {
+                try AVAudioSession
+                .sharedInstance()
+                .setCategory(.playAndRecord,
+                             options: categoryOptions)
+            }
         } catch {
             callback(Helpers.errObj(withCode: "preparefail", withMessage: "Failed to set audio session category"))
             return
@@ -77,7 +91,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
             return
         }
         
-        callback(nil)
+        callback([NSNull()])
     }
     
     @objc
@@ -88,7 +102,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
         }
         
         recorder.stop()
-        callback(nil)
+        callback([NSNull()])
     }
     
     @objc
@@ -99,13 +113,13 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
         }
         
         recorder.pause()
-        callback(nil)
+        callback([NSNull()])
     }
     
     @objc
     func destroy(_ recorderId: Int, withCallback callback: RCTResponseSenderBlock) {
         self.destroyRecorder(withId: recorderId)
-        callback(nil)
+        callback([NSNull()])
     }
     
     private func destroyRecorder(withId recorderId: Int) {

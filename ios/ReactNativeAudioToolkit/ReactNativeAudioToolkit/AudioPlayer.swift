@@ -13,6 +13,79 @@ class AudioPlayer : NSObject {
     private var playerPool = [Int: AVPlayer]()
     @objc var bridge: RCTBridge!
     
+    override init() {
+        super.init()
+        NotificationCenter
+            .default
+            .addObserver(self,
+                         selector: #selector(handleRouteChange(notification:)),
+                         name: AVAudioSession.routeChangeNotification,
+                         object: nil)
+        NotificationCenter
+            .default
+            .addObserver(self,
+                         selector: #selector(handleInterruption(notification:)),
+                         name: AVAudioSession.interruptionNotification,
+                         object: nil)
+    }
+    
+    @objc func handleRouteChange(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+            let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
+                return
+        }
+        
+        // Switch over the route change reason.
+        switch reason {
+
+        case .newDeviceAvailable: // New device found.
+            //let session = AVAudioSession.sharedInstance()
+            //headphonesConnected = hasHeadphones(in: session.currentRoute)
+            print("[AudioSession]: Route change. New device available.")
+            break
+        case .oldDeviceUnavailable: // Old device removed.
+            /* if let previousRoute =
+                userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
+                //headphonesConnected = hasHeadphones(in: previousRoute)
+            } */
+            print("[AudioSession]: Route change. Old device unavailable.")
+            break
+        default: ()
+        }
+    }
+    
+    @objc func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+                return
+        }
+
+        // Switch over the interruption type.
+        switch type {
+
+        case .began:
+            // An interruption began. Update the UI as needed.
+            print("[AudioSession]: Interruption began.")
+            break;
+        case .ended:
+           // An interruption ended. Resume playback, if appropriate.
+            print("[AudioSession]: Interruption ended.")
+            guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+            let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+            if options.contains(.shouldResume) {
+                // Interruption ended. Playback should resume.
+                print("[AudioSession]: Playback should resume.")
+            } else {
+                // Interruption ended. Playback should not resume.
+                print("[AudioSession]: Playback should not resume.")
+            }
+
+        default: ()
+        }
+    }
+    
     private func findURL(forPath path: String) -> URL? {
         guard let possibleURL = FileManager
             .default
@@ -129,10 +202,24 @@ class AudioPlayer : NSObject {
         }
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(avAudioSessionCategory, options: [
+            let categoryOptions: AVAudioSession.CategoryOptions = [
+                .duckOthers,
                 .defaultToSpeaker,
-                .mixWithOthers,
-            ])
+                .allowBluetooth,
+            ]
+            if #available(iOS 10.0, *) {
+                try AVAudioSession
+                    .sharedInstance()
+                    .setCategory(
+                        .playAndRecord,
+                        mode: .voiceChat,
+                        options: categoryOptions)
+            } else {
+                try AVAudioSession
+                .sharedInstance()
+                .setCategory(.playAndRecord,
+                             options: categoryOptions)
+            }
         } catch {
             callback(Helpers.errObj(withCode: "preparefail",
                                     withMessage: "Failed to set audio session category: \(error)"))
