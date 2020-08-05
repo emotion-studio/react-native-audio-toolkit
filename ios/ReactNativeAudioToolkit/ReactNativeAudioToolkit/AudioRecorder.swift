@@ -4,9 +4,47 @@ import AVFoundation
 class AudioRecorder : NSObject, AVAudioRecorderDelegate {
     private var recorderPool = [Int: AVAudioRecorder]()
     @objc var bridge: RCTBridge!
+    private var observer: NSKeyValueObservation?
 
     private func keyForRecorder(recorder: AVAudioRecorder) -> Int? {
         return self.recorderPool.first(where: { $0.value == recorder })?.key
+    }
+    
+    override init() {
+        super.init()
+        self.configureAudioSession()
+    }
+    
+    private func configureAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            let categoryOptions: AVAudioSession.CategoryOptions = [
+                .duckOthers,
+                .defaultToSpeaker,
+                .allowBluetooth,
+            ]
+            try audioSession.setCategory(.playAndRecord, options: categoryOptions)
+        } catch {
+            print("[AudioSession] - Failed to set audio session category: \(error)")
+        }
+    }
+    
+    private func activateAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+            print("[AudioSession] - Activated audio session.")
+        } catch {
+            print("[AudioSession] - Failed to activate audio session: \(error)")
+        }
+    }
+    
+    private func deactivateAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+            print("[AudioSession] - Deactivated audio session.")
+        } catch {
+            print("[AudioSession] - Failed to deactivate audio session: \(error)")
+        }
     }
     
     @objc
@@ -31,38 +69,6 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
         }
         
         do {
-            let categoryOptions: AVAudioSession.CategoryOptions = [
-                .duckOthers,
-                .allowBluetooth,
-                .defaultToSpeaker,
-            ]
-            if #available(iOS 10.0, *) {
-                try AVAudioSession
-                    .sharedInstance()
-                    .setCategory(
-                        .playAndRecord,
-                        mode: .voiceChat,
-                        options: categoryOptions)
-            } else {
-                try AVAudioSession
-                .sharedInstance()
-                .setCategory(.playAndRecord,
-                             options: categoryOptions)
-            }
-        } catch {
-            callback(Helpers.errObj(withCode: "preparefail", withMessage: "Failed to set audio session category"))
-            return
-        }
-        
-        do {
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            let errorMessage = "Could not set audio session active, error: \(error)"
-            callback(Helpers.errObj(withCode: "preparefail", withMessage: errorMessage))
-            return
-        }
-        
-        do {
             let recordSettings = Helpers.recorderSettings(fromOptions: options)
             let recorder = try AVAudioRecorder(url: filePath, settings: recordSettings)
             recorder.delegate = self;
@@ -71,7 +77,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
                 callback(Helpers.errObj(withCode: "preparefail", withMessage: "Failed to prepare recorder. Settings are probably wrong."))
                 return
             }
-            callback([filePath.absoluteString])
+            callback([NSNull(), filePath.absoluteString])
         } catch {
             let errorMessage = "Failed to initialize recorder, error: \(error)"
             callback(Helpers.errObj(withCode: "preparefail", withMessage: errorMessage))
@@ -90,6 +96,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
             callback(Helpers.errObj(withCode: "startfail", withMessage: "Failed to start recorde"))
             return
         }
+        self.activateAudioSession()
         
         callback([NSNull()])
     }
@@ -102,6 +109,7 @@ class AudioRecorder : NSObject, AVAudioRecorderDelegate {
         }
         
         recorder.stop()
+        self.deactivateAudioSession()
         callback([NSNull()])
     }
     

@@ -10,6 +10,7 @@ import AVFoundation
 
 @objc(AudioPlayer)
 class AudioPlayer : NSObject {
+    private var observer: NSKeyValueObservation?
     private var playerPool = [Int: AVPlayer]()
     @objc var bridge: RCTBridge!
     
@@ -27,6 +28,67 @@ class AudioPlayer : NSObject {
                          selector: #selector(handleInterruption(notification:)),
                          name: AVAudioSession.interruptionNotification,
                          object: nil)
+        self.configureAudioSession()
+    }
+    
+    @objc
+    private func itemDidFinishPlaying(notification: Notification) {
+        guard let item = notification.object as? ReactPlayerItem,
+            let playerId = item.reactPlayerId,
+            let player = self.playerPool[playerId] as? ReactPlayer else {
+            print("Couldn't find playerId in notification object")
+                return
+        }
+        player.pause()
+        
+        if player.autoDestroy {
+            self.destroyPlayer(withId: playerId)
+        } else {
+            self.seek(playerId, withPosition: 0, withCallback: {_ in return})
+        }
+        
+        if player.looping {
+            self.bridge
+                .eventDispatcher()
+                .sendAppEvent(withName: "RCTAudioPlayerEvent:\(playerId)",body: [
+                    "event": "looped",
+                    "data": nil,
+                ])
+            player.play()
+            //player.rate = player.speed
+        } else {
+            self.bridge
+            .eventDispatcher()
+            .sendAppEvent(withName: "RCTAudioPlayerEvent:\(playerId)",body: [
+                "event": "ended",
+                "data": nil,
+            ])
+        }
+    }
+    
+    private func configureAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            let categoryOptions: AVAudioSession.CategoryOptions = [
+                .duckOthers,
+                .defaultToSpeaker,
+                .allowBluetooth,
+            ]
+            try audioSession.setCategory(.playAndRecord, options: categoryOptions)
+        } catch {
+            print("[AudioSession] - Failed to set audio session category: \(error)")
+        }
+    }
+    
+    private func listRouteChannels(route: AVAudioSessionRouteDescription) {
+        print("[AudioSession] - Available outputs:")
+        for output in route.outputs {
+            print(output)
+        }
+        print("[AudioSession] - Available inputs:")
+        for input in route.inputs {
+            print(input)
+        }
     }
     
     @objc func handleRouteChange(notification: Notification) {
@@ -35,6 +97,8 @@ class AudioPlayer : NSObject {
             let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
                 return
         }
+        let audioSession = AVAudioSession.sharedInstance()
+        let currentRoute = audioSession.currentRoute
         
         // Switch over the route change reason.
         switch reason {
@@ -42,17 +106,30 @@ class AudioPlayer : NSObject {
         case .newDeviceAvailable: // New device found.
             //let session = AVAudioSession.sharedInstance()
             //headphonesConnected = hasHeadphones(in: session.currentRoute)
-            print("[AudioSession]: Route change. New device available.")
+            print("[AudioSession] - Route change. New device available.")
             break
         case .oldDeviceUnavailable: // Old device removed.
-            /* if let previousRoute =
-                userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
-                //headphonesConnected = hasHeadphones(in: previousRoute)
-            } */
-            print("[AudioSession]: Route change. Old device unavailable.")
+            print("[AudioSession] - Route change. Old device unavailable.")
             break
         default: ()
         }
+        self.listRouteChannels(route: currentRoute)
+        /* do {
+            if !hasHeadphones(in: currentRoute) {
+                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+                print("[AudioSession] - Overrode output port to speaker")
+            } else {
+                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.none)
+                print("[AudioSession] - Overrode output port to none")
+            }
+        } catch {
+            print("[AudioSession] - Failed to override output port")
+        } */
+    }
+    
+    func hasHeadphones(in routeDescription: AVAudioSessionRouteDescription) -> Bool {
+        // Filter the outputs to only those with a port type of headphones.
+        return !routeDescription.outputs.filter({$0.portType == .headphones}).isEmpty
     }
     
     @objc func handleInterruption(notification: Notification) {
@@ -67,19 +144,19 @@ class AudioPlayer : NSObject {
 
         case .began:
             // An interruption began. Update the UI as needed.
-            print("[AudioSession]: Interruption began.")
+            print("[AudioSession] - Interruption began.")
             break;
         case .ended:
            // An interruption ended. Resume playback, if appropriate.
-            print("[AudioSession]: Interruption ended.")
+            print("[AudioSession] - Interruption ended.")
             guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
             if options.contains(.shouldResume) {
                 // Interruption ended. Playback should resume.
-                print("[AudioSession]: Playback should resume.")
+                print("[AudioSession] - Playback should resume.")
             } else {
                 // Interruption ended. Playback should not resume.
-                print("[AudioSession]: Playback should not resume.")
+                print("[AudioSession] - Playback should not resume.")
             }
 
         default: ()
@@ -120,40 +197,6 @@ class AudioPlayer : NSObject {
         return
     }
     
-    @objc
-    private func itemDidFinishPlaying(notification: Notification) {
-        guard let item = notification.object as? ReactPlayerItem,
-            let playerId = item.reactPlayerId,
-            let player = self.playerPool[playerId] as? ReactPlayer else {
-            print("Couldn't find playerId in notification object")
-                return
-        }
-        
-        if player.autoDestroy {
-            self.destroyPlayer(withId: playerId)
-        } else {
-            self.seek(playerId, withPosition: 0, withCallback: {_ in return})
-        }
-        
-        if player.looping {
-            self.bridge
-                .eventDispatcher()
-                .sendAppEvent(withName: "RCTAudioPlayerEvent:\(playerId)",body: [
-                    "event": "looped",
-                    "data": nil,
-                ])
-            player.play()
-            player.rate = player.speed
-        } else {
-            self.bridge
-            .eventDispatcher()
-            .sendAppEvent(withName: "RCTAudioPlayerEvent:\(playerId)",body: [
-                "event": "ended",
-                "data": nil,
-            ])
-        }
-    }
-    
     @objc(test)
     func test() {
         print("Hello from Swift!")
@@ -186,46 +229,6 @@ class AudioPlayer : NSObject {
                          name: Notification.Name.AVPlayerItemDidPlayToEndTime,
                          object: item)
         
-        var avAudioSessionCategory: AVAudioSession.Category = .playAndRecord
-        if let category = options["category"] as? Int {
-            switch(category) {
-            case 2:
-                avAudioSessionCategory = .ambient
-                break;
-            case 3:
-                avAudioSessionCategory = .soloAmbient
-                break;
-            default:
-                avAudioSessionCategory = .playAndRecord
-                break;
-            }
-        }
-        
-        do {
-            let categoryOptions: AVAudioSession.CategoryOptions = [
-                .duckOthers,
-                .defaultToSpeaker,
-                .allowBluetooth,
-            ]
-            if #available(iOS 10.0, *) {
-                try AVAudioSession
-                    .sharedInstance()
-                    .setCategory(
-                        .playAndRecord,
-                        mode: .voiceChat,
-                        options: categoryOptions)
-            } else {
-                try AVAudioSession
-                .sharedInstance()
-                .setCategory(.playAndRecord,
-                             options: categoryOptions)
-            }
-        } catch {
-            callback(Helpers.errObj(withCode: "preparefail",
-                                    withMessage: "Failed to set audio session category: \(error)"))
-            return
-        }
-        
         let player = ReactPlayer(playerItem: item)
         if let autoDestroy = options["autoDestroy"] as? Bool {
             player.autoDestroy = autoDestroy
@@ -237,11 +240,13 @@ class AudioPlayer : NSObject {
         }
         
         if player.status == .failed {
+            print("[AudioPlayer] - Could not initialize player: \(player.error.debugDescription)")
             callback(Helpers.errObj(withCode: "preparefail",
                                     withMessage: "Could not initialize player: \(player.error.debugDescription)"))
         }
         
         guard let currentItem = player.currentItem else {
+            print("[AudioPlayer] - Could not initialize player: current item is nil.")
             callback(Helpers.errObj(withCode: "preparefail",
                                     withMessage: "Could not initialize player: current item is nil"))
             return
@@ -252,6 +257,7 @@ class AudioPlayer : NSObject {
         }
         
         if currentItem.status == .failed {
+            print("[AudioPlayer] - Could not initialize player: \(player.error.debugDescription)")
             callback(Helpers.errObj(withCode: "preparefail",
                                     withMessage: "Could not initialize player: \(player.error.debugDescription)"))
             return
@@ -282,6 +288,7 @@ class AudioPlayer : NSObject {
             if player.autoDestroy {
                 self.destroyPlayer(withId: playerId)
             }
+            print("[AudioPlayer] - Preparing player failed.")
             callback(Helpers.errObj(withCode: "preparefail", withMessage: "Preparing player failed"))
         }
     }
@@ -290,23 +297,6 @@ class AudioPlayer : NSObject {
     func destroy(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         self.destroyPlayer(withId: playerId)
         callback([NSNull()])
-    }
-    
-    @objc
-    func play(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
-        guard let player = self.playerPool[playerId] as? ReactPlayer,
-            let currentItem = player.currentItem else {
-            callback(Helpers.errObj(withCode: "notfound",
-                                    withMessage: "playerId \(playerId) not found."))
-            return
-        }
-        player.play()
-        player.rate = player.speed
-        
-        callback([NSNull(), [
-            "duration": currentItem.asset.duration.seconds * 1000,
-            "position": player.currentTime().seconds * 1000,
-        ]])
     }
     
     @objc
@@ -390,6 +380,23 @@ class AudioPlayer : NSObject {
     }
     
     @objc
+    func play(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
+        guard let player = self.playerPool[playerId] as? ReactPlayer,
+            let currentItem = player.currentItem else {
+            callback(Helpers.errObj(withCode: "notfound",
+                                    withMessage: "playerId \(playerId) not found."))
+            return
+        }
+        player.play()
+        //player.rate = player.speed
+        
+        callback([NSNull(), [
+            "duration": currentItem.asset.duration.seconds * 1000,
+            "position": player.currentTime().seconds * 1000,
+        ]])
+    }
+    
+    @objc
     func pause(_ playerId: Int, withCallback callback: RCTResponseSenderBlock) {
         guard let player = self.playerPool[playerId] as? ReactPlayer,
             let currentItem = player.currentItem else {
@@ -397,9 +404,7 @@ class AudioPlayer : NSObject {
                                     withMessage: "playerId \(playerId) not found."))
             return
         }
-
         player.pause()
-
         callback([NSNull(), [
             "duration": currentItem.asset.duration.seconds * 1000,
             "position": player.currentTime().seconds * 1000,
