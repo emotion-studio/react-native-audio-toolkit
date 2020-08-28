@@ -139,7 +139,7 @@ RCT_EXPORT_METHOD(prepare:(nonnull NSNumber*)playerId
     }
     NSNumber *mixWithOthers = [options objectForKey:@"mixWithOthers"];
     NSError *error = nil;
-    [[AVAudioSession sharedInstance] setCategory: avAudioSessionCategory withOptions: (AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionMixWithOthers) error: &error];
+    [[AVAudioSession sharedInstance] setCategory: avAudioSessionCategory withOptions: (AVAudioSessionCategoryOptionDefaultToSpeaker | AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionAllowBluetooth) error: &error];
     if (error) {
         NSDictionary* dict = [Helpers errObjWithCode:@"preparefail"
                                          withMessage:@"Failed to set audio session category."];
